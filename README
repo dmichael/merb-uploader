@@ -1,0 +1,8 @@
+Merb Uploader
+
+This application is meant to be run as an uploading server for long running files. 
+
+To begin, this application follows the path set out by Christopher Stuss
+http://www.scribelabs.com/2007/10/18/file-uploads-via-merb-inside-a-rails-application-part-1-of-3/
+
+There are assuredly going to be changes to the basic assumptions.
