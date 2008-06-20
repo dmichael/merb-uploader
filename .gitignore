@@ -1,3 +1,4 @@
 config/amazon_s3.yml
 config/database.yml
 .DS_Store
+public/assets
