@@ -1,0 +1,16 @@
+
+<div style="padding:50px;">
+<form action="/assets/create" method="post" enctype="multipart/form-data">
+	<p>
+		<%= @asset.errors.on :name %><br />
+		Name:
+	<input type="text" name="asset[name]">
+	</p>
+	<p>
+	Upload:
+	<input class="file" type="file" name="asset[uploaded_data]"/>
+	</p>
+	<p>
+	<input type="submit"/>
+</form>
+</div>

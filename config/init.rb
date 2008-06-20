@@ -57,9 +57,12 @@ Gem.path.unshift(Merb.root / "gems")
 # dependency "RedCloth", "> 3.0"
 # OR
 # dependencies "RedCloth" => "> 3.0", "ruby-aes-cext" => "= 1.0"
+dependency "merb_helpers"
+dependency "activesupport"
+
 Merb::BootLoader.after_app_loads do
   # Add dependencies here that must load after the application loads:
-
+  
   # dependency "magic_admin" # this gem uses the app's model classes
 end
 
@@ -72,8 +75,8 @@ end
 # if you need a database.
 
 # Uncomment for DataMapper ORM
-# use_orm :datamapper
-
+use_orm :datamapper
+dependency "attachmerb_fu"
 # Uncomment for ActiveRecord ORM
 # use_orm :activerecord
 
@@ -94,7 +97,7 @@ end
 # merb.
 #
 # use_test :test_unit
-# use_test :rspec
+use_test :rspec
 
 
 #
@@ -106,7 +109,7 @@ Merb::Config.use do |c|
   # with the cookie session store. If not specified, defaults to '_session_id'.
   # c[:session_id_key] = '_session_id'
 
-  c[:session_secret_key]  = '5efe2ac41250933f58a7e539c43deef1c12517c1'
+  c[:session_secret_key]  = '9ce01bfec054ba53be0fb013d3762d5396e10440'
   c[:session_store] = 'cookie'
 end
 

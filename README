@@ -1,10 +1,12 @@
-Merb Uploader
+== Merb Upload Server
 
-This application is meant to be run as an uploading server for long running processes.
+Very simple upload server using DataMapper and a modified attachmerb_fu that is meant to handle uploads (and other possible processing of the upload) from a primary server application. This does not work with ActiveRecord yet, but may be fruitful to have an ActiveRecord model in the "host" application.  I have included a sample migration in schema/migrations to run from a Rails host. Alternatively, you can run rake dm:db:automigrate with the config pointed to a shared database.
 
-THIS APP DOES NOT WORK YET. As soon as it does, I will revise this document with usage instructions. 
+To use Amazon S3, create a file conig/amazon_s3.yml following the conventions in gems/attachmerb_fu .. amazon_s3.yml.tpl
 
-To begin, this application follows the path set out by Christopher Stuss
-http://www.scribelabs.com/2007/10/18/file-uploads-via-merb-inside-a-rails-application-part-1-of-3/
+TODO:
+- Make the Asset class configurable
+- Make this work with ActiveRecord
+- Integrate with SWFUpload
 
-There are assuredly going to be changes to the basic assumptions.
+

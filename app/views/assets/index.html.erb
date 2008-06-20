@@ -1,0 +1,12 @@
+<h1>All files...</h1>
+
+<p>
+<% @assets.each do |asset| %>	
+<p>
+<b>Name:</b> <%= asset.name %><br />
+<b>Content-Type:</b> <%= asset.content_type %><br />
+<b>Filename:</b> <%= asset.filename %><br />
+<b>URL:</b> <%= asset.public_filename %><br />
+</p>
+<% end %>
+</p>
