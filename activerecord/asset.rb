@@ -1,15 +1,6 @@
-class Asset < DataMapper::Base
-  property :name, :string
-  property :filename, :string
-  property :content_type, :string
-  property :size, :integer
-  property :width, :integer
-  property :height, :integer
-  property :parent_id, :integer
-  property :user_id, :integer
-  property :type, :string
-  property :thumbnail, :string
-  property :created_at, :datetime
+class Asset < ActiveRecord::Base
+  has_one :queued_job, :as => :queueable
+
   
   has_attachment  :storage => :file_system,#:s3 
                   :max_size => 10.megabytes,
@@ -17,7 +8,7 @@ class Asset < DataMapper::Base
                   :processor => :MiniMagick # attachment_fu looks in this order: ImageScience, Rmagick, MiniMagick
 
   validates_as_attachment
-  validates_presence_of :name
+  
   after_save :create_queued_job
   
   def create_queued_job
@@ -27,5 +18,4 @@ class Asset < DataMapper::Base
       queued_job.save
     end
   end
-
 end

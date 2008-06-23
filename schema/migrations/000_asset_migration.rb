@@ -7,9 +7,9 @@ class AssetMigration < ActiveRecord::Migration
       t.integer :width
       t.integer :height
       t.integer :parent_id
-      t.integer :attachable_id # for use with ActiveRecord and polymorphic associations
-      t.string :attachable_type # for use with ActiveRecord and polymorphic associations
+      t.string :type # for use with ActiveRecord and polymorphic associations
       t.string :thumbnail
+      t.string :user_id
       t.datetime :created_at
       t.timestamps
     end

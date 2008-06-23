@@ -4,6 +4,12 @@ Very simple upload server using DataMapper and a modified attachmerb_fu that is 
 
 To use Amazon S3, create a file conig/amazon_s3.yml following the conventions in gems/attachmerb_fu .. amazon_s3.yml.tpl
 
+I have also added a QueuedJob model for post processing of uploaded file which should also be included in the host application. This could be connected to Amazon SQS or similar service with some modification, but it seems this may not be necessary.
+
+NB: Migrations should be managed by the host application ( i.e. Rails ) but are provided as a convenience. Please do not use the DataMapper automigrate. The thinking is that the host application should manage all of the data models and database migrations. This application will check with the database to see that everything is in order.
+
+activerecord folder contains ActiveRecord equivalent objects for use in the host application, though I may soon make this app completely compatible
+
 TODO:
 - Make the Asset class configurable
 - Make this work with ActiveRecord

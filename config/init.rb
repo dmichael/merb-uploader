@@ -64,6 +64,20 @@ Merb::BootLoader.after_app_loads do
   # Add dependencies here that must load after the application loads:
   
   # dependency "magic_admin" # this gem uses the app's model classes
+  begin
+    Asset.first
+  rescue StandardError => bang
+    Merb.logger.error "\n\n!!!   No assets table found. Please run the migrations from your host application!\n\n"
+    raise
+  end
+  
+  begin
+    QueuedJob.first
+  rescue StandardError => bang
+    Merb.logger.error "\n\n!!!   No queued_jobs table found. PleasePlease run the migrations from your host application!\n\n"
+    raise
+  end
+  
 end
 
 #

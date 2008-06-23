@@ -9,5 +9,9 @@ class Exceptions < Application
   def not_acceptable
     render :format => :html
   end
+  
+  def no_database_table
+    Merb.logger.debug "ERRROR"
+  end
 
 end

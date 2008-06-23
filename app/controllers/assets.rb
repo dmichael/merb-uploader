@@ -26,12 +26,15 @@ class Assets < Application
   end
 
   def create
+    Merb.logger.debug params[:asset][:user_id]
     @asset = Asset.new(params[:asset])
-    if @asset.save
-      redirect url(:asset, @asset)
-    else
-      render :new
+    Merb.logger.debug @asset.inspect
+    @asset.save ? success = @asset.name : success=false
+    if success == false
+      errors = "errors=#{@asset.errors.on :filename}|#{@asset.errors.on :name}"
+      #redirect "#{request.protocol}#{request.env["HTTP_HOST"]}#{request.uri}"
     end
+      redirect "#{request.env['HTTP_REFERER'].split("?").first}?success=#{success}&#{errors}"
   end
 
   def update

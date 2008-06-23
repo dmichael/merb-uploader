@@ -1,8 +1,9 @@
-<h1>All files...</h1>
+<h1>All Assets (<%=@assets.size%>)</h1>
 
 <p>
 <% @assets.each do |asset| %>	
 <p>
+<b>ID:</b> <%= asset.id %><br />
 <b>Name:</b> <%= asset.name %><br />
 <b>Content-Type:</b> <%= asset.content_type %><br />
 <b>Filename:</b> <%= asset.filename %><br />

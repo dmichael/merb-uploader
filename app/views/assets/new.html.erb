@@ -1,16 +1,24 @@
-
-<div style="padding:50px;">
+<h1>New Asset</h1>
 <form action="/assets/create" method="post" enctype="multipart/form-data">
-	<p>
-		<%= @asset.errors.on :name %><br />
-		Name:
-	<input type="text" name="asset[name]">
-	</p>
-	<p>
-	Upload:
-	<input class="file" type="file" name="asset[uploaded_data]"/>
-	</p>
-	<p>
+	<span style="color:red;"><%= @asset.errors.full_messages.join("<br>") %></span>
+	<table cellspacing="4">
+		<tr>
+			<td >
+				Name:
+				</td>
+				<td>
+			<input type="text" name="asset[name]">
+			</td>
+		</tr>
+		<tr>
+			<td >
+				Upload:
+				</td>
+				<td>
+					<input class="file" type="file" name="asset[uploaded_data]"/>
+			</td>
+		</tr>
+	</table>
+		
 	<input type="submit"/>
 </form>
-</div>
