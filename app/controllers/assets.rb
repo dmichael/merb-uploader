@@ -1,6 +1,7 @@
+
 class Assets < Application
   # provides :xml, :yaml, :js
-
+  layout false
   def index
     @assets = Asset.all
     display @assets
@@ -55,6 +56,30 @@ class Assets < Application
     else
       raise BadRequest
     end
+  end
+  
+  def progress
+    render :update do |page|
+      @status = Mongrel::Uploads.check(params[:upload_id])
+      page.upload_progress.update(@status[:size], @status[:received]) if @status
+    end
+  end
+  
+  def upload
+    # SWFUpload file
+    if params[:Filedata]
+      @asset = Asset.new(:swf_uploaded_data => params["Filedata"])
+    else
+      @asset = Asset.new(params[:asset])
+    end
+    
+    if @asset.save
+      @asset.update_attributes(params[:asset]) if params[:asset] # 'type' is gleaned from class type
+      (params[:Filedata]) ? render(" {id:\"#{@asset.id}\"} ") : redirect("#{request.env['HTTP_REFERER'].split("?").first}?success=true")
+    else
+      (params[:Filedata]) ? render("Server Error", :status => 500) : errors = "errors=#{@asset.errors.on :filename}|#{@asset.errors.on :name}"
+    end
+    
   end
 
 end

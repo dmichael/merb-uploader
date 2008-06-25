@@ -71,13 +71,6 @@ Merb::BootLoader.after_app_loads do
     raise
   end
   
-  begin
-    QueuedJob.first
-  rescue StandardError => bang
-    Merb.logger.error "\n\n!!!   No queued_jobs table found. PleasePlease run the migrations from your host application!\n\n"
-    raise
-  end
-  
 end
 
 #
@@ -121,10 +114,10 @@ Merb::Config.use do |c|
 
   # Sets up a custom session id key, if you want to piggyback sessions of other applications
   # with the cookie session store. If not specified, defaults to '_session_id'.
-  # c[:session_id_key] = '_session_id'
+  c[:session_id_key] = '_nature_recordists_session'
 
-  c[:session_secret_key]  = '9ce01bfec054ba53be0fb013d3762d5396e10440'
-  c[:session_store] = 'cookie'
+  c[:session_secret_key]  = '74f414a398b1996ef26a462ebd64863a'
+  c[:session_store] = 'datamapper'
 end
 
 

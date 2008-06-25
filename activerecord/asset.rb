@@ -1,21 +1,24 @@
-class Asset < ActiveRecord::Base
-  has_one :queued_job, :as => :queueable
-
-  
+class Asset < ActiveRecord::Base  
   has_attachment  :storage => :file_system,#:s3 
                   :max_size => 10.megabytes,
                   :thumbnails => { :thumb => '80x80>', :tiny => '40x40>' },
+                  :content_type => ["application/octet-stream", "audio/mpeg", "audio/x-aiff", "audio/aiff", "audio/aiff", "audio/x-wav", "audio/wav"],
                   :processor => :MiniMagick # attachment_fu looks in this order: ImageScience, Rmagick, MiniMagick
 
   validates_as_attachment
   
-  after_save :create_queued_job
-  
-  def create_queued_job
-    unless self.parent_id
-      # Once a site is saved, create a Job
-      queued_job = QueuedJob.new(:queueable_type => self.class.name, :queueable_id => self.id)
-      queued_job.save
+  def swf_uploaded_data=(file_data)
+    return nil if file_data.nil? || file_data.size == 0 
+    # Map file extensions to mime types.  Thanks to bug in Flash 8
+    # the content type is always set to application/octet-stream.
+    self.filename = file_data.original_filename if respond_to?(:filename)
+    mime = MIME::Types.type_for(self.filename)[0]
+    self.content_type = mime.blank? ? file_data.content_type : mime.content_type
+    if file_data.is_a?(StringIO)
+      file_data.rewind
+      self.temp_data = file_data.read
+    else
+      self.temp_path = file_data.path
     end
   end
 end

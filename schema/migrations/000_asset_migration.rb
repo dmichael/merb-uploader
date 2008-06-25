@@ -1,6 +1,7 @@
 class AssetMigration < ActiveRecord::Migration
   def self.up
     create_table :assets do |t|
+      t.string :name
       t.string :filename
       t.string :content_type
       t.integer :size
@@ -10,7 +11,6 @@ class AssetMigration < ActiveRecord::Migration
       t.string :type # for use with ActiveRecord and polymorphic associations
       t.string :thumbnail
       t.string :user_id
-      t.datetime :created_at
       t.timestamps
     end
   end
