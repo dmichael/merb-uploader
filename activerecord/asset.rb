@@ -1,5 +1,5 @@
 class Asset < ActiveRecord::Base  
-  has_attachment  :storage => :file_system,#:s3 
+  has_attachment  :storage => FILE_STORAGE,
                   :max_size => 10.megabytes,
                   :thumbnails => { :thumb => '80x80>', :tiny => '40x40>' },
                   :content_type => ["application/octet-stream", "audio/mpeg", "audio/x-aiff", "audio/aiff", "audio/aiff", "audio/x-wav", "audio/wav"],
