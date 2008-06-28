@@ -5,4 +5,5 @@ Merb::Config.use { |c|
   c[:reload_time] = 0.5
   c[:log_auto_flush ] = true
 }
-FILE_STORAGE = :file_system#:s3 
+FILE_STORAGE = :file_system 
+PATH_PREFIX = 'public/assets'

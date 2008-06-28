@@ -6,3 +6,4 @@ Merb::Config.use { |c|
   c[:log_file] = Merb.log_path + "/production.log"
 }
 FILE_STORAGE = :s3 
+PATH_PREFIX = 'assets'

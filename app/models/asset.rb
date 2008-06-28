@@ -13,7 +13,8 @@ class Asset < DataMapper::Base
   property :created_at, :datetime
   property :updated_at, :datetime  
   
-  has_attachment  :storage => FILE_STORAGE,
+  has_attachment  :storage => FILE_STORAGE, :s3_access => "private",
+                  :path_prefix => PATH_PREFIX,
                   :max_size => 10.megabytes,
                   :thumbnails => { :thumb => '80x80>', :tiny => '40x40>' },
                   :processor => :MiniMagick # attachment_fu looks in this order: ImageScience, Rmagick, MiniMagick
