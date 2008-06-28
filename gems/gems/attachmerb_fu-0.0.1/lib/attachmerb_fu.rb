@@ -366,16 +366,17 @@ module AttachmerbFu # :nodoc:
       end
 
       def sanitize_filename(filename)
+        return unless filename
         returning filename.strip do |name|
           # NOTE: File.basename doesn't work right with Windows paths on Unix
           # get only the filename, not the whole path
           name.gsub! /^.*(\\|\/)/, ''
 
           # Finally, replace all non alphanumeric, underscore or periods with underscore
-          name.gsub! /[^\w\.\-]/, '_'
+          name.gsub! /[^A-Za-z0-9\.\-]/, '_'
+          name.gsub! /,/,'_'
         end
       end
-
       # before_validation callback.
       def set_size_from_temp_path
         self.size = File.size(temp_path) if save_attachment?

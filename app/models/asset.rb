@@ -20,6 +20,20 @@ class Asset < DataMapper::Base
                   :processor => :MiniMagick # attachment_fu looks in this order: ImageScience, Rmagick, MiniMagick
 
   validates_as_attachment
+  
+  before_save :sanitize_filename
+
+  def sanitize_filename
+    return unless self.filename
+    returning self.filename.strip do |name|
+      # NOTE: File.basename doesn't work right with Windows paths on Unix
+      # get only the filename, not the whole path
+      self.filename.gsub! /^.*(\\|\/)/, ''
+
+      # Finally, replace all non alphanumeric, underscore or periods with underscore
+      self.filename.gsub! /[^A-Za-z0-9\.\-]/, '_'
+    end
+  end
 
   def swf_uploaded_data=(file_data)
     my_file = file_data["tempfile"] if !file_data.nil? and !file_data["tempfile"].nil?
