@@ -191,17 +191,23 @@ module AttachmerbFu # :nodoc:
       def attachment_path_id
         ((respond_to?(:parent_id) && parent_id) || id).to_s
       end
+      
+      # by default paritions files into directories e.g. 0000/0001/image.jpg
+      # to turn this off set :partition => false
+      def partitioned_path(*args)
+        ("%08d" % attachment_path_id).scan(/..../) + args
+      end
 
       # The pseudo hierarchy containing the file relative to the bucket name
       # Example: <tt>:table_name/:id</tt>
       def base_path
-        File.join(attachment_options[:path_prefix], attachment_path_id)
+        File.join(attachment_options[:path_prefix])
       end
 
       # The full path to the file relative to the bucket name
       # Example: <tt>:table_name/:id/:filename</tt>
       def full_filename(thumbnail = nil)
-        File.join(base_path, thumbnail_name_for(thumbnail))
+        File.join(base_path, *partitioned_path(thumbnail_name_for(thumbnail)) )
       end
 
       # All public objects are accessible via a GET request to the S3 servers. You can generate a 

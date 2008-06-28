@@ -3,3 +3,4 @@ config/database.yml
 .DS_Store
 public/assets
 deploy.*
+log/*
