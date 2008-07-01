@@ -67,10 +67,18 @@ Merb::BootLoader.after_app_loads do
   begin
     Asset.first
   rescue StandardError => bang
-    Merb.logger.error "\n\n!!!   No assets table found. Please run the migrations from your host application!\n\n"
+    Merb.logger.error "\n\n[WARNING] No assets table found. Please run the migrations from your host application!\n\n"
     raise
   end
   
+  Thread.new { 
+    while(true)
+      Merb.logger.debug "[INFO] Pinging the DB to keep it alive."
+      database.query("select 1")
+      sleep(300) 
+    end
+  }
+
 end
 
 #
@@ -118,6 +126,7 @@ Merb::Config.use do |c|
 
   c[:session_secret_key]  = '74f414a398b1996ef26a462ebd64863a'
   c[:session_store] = 'datamapper'
+
 end
 
 

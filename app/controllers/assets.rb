@@ -66,12 +66,20 @@ class Assets < Application
   end
   
   def upload
-    # SWFUpload file
-    if params[:Filedata]
-      @asset = Asset.new(:swf_uploaded_data => params["Filedata"])
-    else
-      @asset = Asset.new(params[:asset])
+    begin
+      handle_data
+    rescue DataObject::QueryError => e
+      Merb.logger.error e
+      # try again - DataMapper/Merb currently suffering from a MySQL timeout situation 
+      handle_data
     end
+  end
+  
+protected
+  
+  def handle_data
+    # SWFUpload file
+    @asset = (params[:Filedata])? Asset.new(:swf_uploaded_data => params["Filedata"]) : Asset.new(params[:asset])
     
     if @asset.save
       @asset.update_attributes(params[:asset]) if params[:asset] # 'type' is gleaned from class type
@@ -79,7 +87,6 @@ class Assets < Application
     else
       (params[:Filedata]) ? render("Server Error", :status => 500) : errors = "errors=#{@asset.errors.on :filename}|#{@asset.errors.on :name}"
     end
-    
   end
 
 end
