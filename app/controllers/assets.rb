@@ -79,7 +79,7 @@ protected
     if Asset.audio_file_types.include?( @asset.content_type )
       @info = Mp3Info.new(@asset.temp_path)
     end
-    
+    puts @info.params.inspect
     @asset.update_attributes( @info.params )
 
     if @asset.save

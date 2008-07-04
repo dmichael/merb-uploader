@@ -34,15 +34,21 @@ class Mp3Info
     self.params = {}
 
     if `which mp3info`
-      vals = "%m|%s|%r|%q"#|%a|%c|%l|%y|%t"
+      vals = "%m|%s|%r|%Q"
       keys = %w{minutes seconds bit_rate sampling_frequency}
-      
       self.data = `mp3info -p '#{vals}' #{path_to_file}`.to_s.split('|')
-      
       self.data.each_with_index do |param, i|
         self.params["#{keys[i]}"] = param
       end
     end
+    
+    # self.params["minutes"] = `mp3info -p '%m' #{path_to_file}`
+    # self.params["seconds"] = `mp3info -p '%s' #{path_to_file}`
+    # self.params["bit_rate"] = `mp3info -p '%r' #{path_to_file}`
+    # self.params["sampling_frequency"] = `mp3info -p '%q' #{path_to_file}`
+    # self.params["artist"] = `mp3info -p '%a' #{path_to_file}`
+    # self.params["comment"] = `mp3info -p '%c' #{path_to_file}`
+    # self.params["title"] = `mp3info -p '%t' #{path_to_file}`
   end
   
 end
