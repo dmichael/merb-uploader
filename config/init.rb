@@ -70,12 +70,12 @@ Merb::BootLoader.after_app_loads do
     Merb.logger.error "\n\n[WARNING] No assets table found. Please run the migrations from your host application!\n\n"
     raise
   end
-  
+  # the following may not work
+  # DATAMAPPER WAS MODIFIED ON THE SERVER!
   Thread.new { 
     while(true)
-      Merb.logger.debug "[INFO] Pinging the DB to keep it alive."
       database.query("select 1")
-      sleep(300) 
+      sleep(3000) 
     end
   }
 

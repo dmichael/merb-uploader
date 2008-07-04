@@ -11,8 +11,12 @@ class Asset < DataMapper::Base
   property :type, :string
   property :thumbnail, :string
   property :created_at, :datetime
-  property :updated_at, :datetime  
-  
+  property :updated_at, :datetime
+  property :minutes, :integer
+  property :seconds, :integer
+  property :bit_rate, :integer
+  property :sampling_frequency, :integer
+      
   has_attachment  :storage => FILE_STORAGE, :s3_access => "private",
                   :path_prefix => PATH_PREFIX,
                   :max_size => 10.megabytes,
@@ -20,6 +24,10 @@ class Asset < DataMapper::Base
                   :processor => :MiniMagick # attachment_fu looks in this order: ImageScience, Rmagick, MiniMagick
 
   validates_as_attachment
+  
+  def self.audio_file_types
+    %w{ audio/mpeg audio/x-mpeg audio/mp3 audio/x-mp3 audio/mpeg3 audio/x-mpeg3 audio/mpg audio/x-mpg audio/x-mpegaudio }
+  end
   
   before_save :sanitize_filename
 
